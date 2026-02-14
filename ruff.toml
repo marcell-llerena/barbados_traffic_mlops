@@ -1,0 +1,52 @@
+line-length = 88
+target-version = "py313"
+
+exclude = [
+  "*.ipynb",
+]
+
+[lint]
+extend-select = [
+    "ANN",    # flake8-annotations
+    "B",      # flake8-bugbear
+    "C4",     # flake8-comprehensions
+    "ISC",    # flake8-implicit-str-concat
+    "LOG",    # flake8-logging
+    "G",      # flake8-logging-format
+    "PIE",    # flake8-pie
+    "PTH",    # flake8-use-pathlib
+    "Q",      # flake8-quotes
+    "RSE",    # flake8-raise
+    "RET",    # flake8-return
+    "SIM",    # flake8-simplify
+    "TID",    # flake8-tidy-imports
+    "FLY",    # flynt
+    "I",      # isort
+    "PD",     # pandas-vet
+    "PERF",   # perflint
+    "E",      # pycodestyle/error
+    "W",      # pycodestyle/warning
+    "F",      # pyflakes
+    "PGH",    # pygrep-hooks
+    "PLE",    # pylint/error
+    "UP",     # pyupgrade
+    "RUF022", # unsorted-dunder-all
+    "S101",   # assert derived from the flake8-bandit,
+]
+
+ignore = [
+    "ANN003", # missing-type-kwargs
+    "G004",   # logging-f-string
+]
+
+[lint.pydocstyle]
+convention = "google"
+
+[lint.flake8-tidy-imports]
+ban-relative-imports = "all"
+
+[lint.isort]
+known-first-party = ["traffic_mlops"]
+force-sort-within-sections = false
+force-single-line = true
+lines-after-imports = 2
