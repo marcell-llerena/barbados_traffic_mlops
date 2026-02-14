@@ -1,0 +1,30 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: check-toml
+      - id: check-yaml
+        args: [--allow-multiple-documents]
+      - id: mixed-line-ending
+        args: [--fix=lf]
+      - id: end-of-file-fixer
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.15.0
+    hooks:
+      - id: ruff-check
+        args: [--config, ruff.toml, --show-fixes]
+        stages: [pre-commit]
+      - id: ruff-format
+        args: [--check, --config, ruff.toml]
+        stages: [pre-commit]
+
+  - repo: local
+    hooks:
+      - id: pyrefly-check
+        name: pyrefly (type check)
+        entry: uv run --frozen pyrefly check
+        language: system
+        pass_filenames: false
+        stages: [pre-push]
+        require_serial: true
