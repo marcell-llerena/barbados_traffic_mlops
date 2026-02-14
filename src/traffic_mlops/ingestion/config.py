@@ -5,6 +5,20 @@ from pydantic import Field
 
 
 class YoloVehicleTrackerConfig(BaseModel):
+    """Configuration for YOLO-based vehicle tracking over video files.
+
+    Attributes:
+        model_name: Name of the YOLO model to use for vehicle tracking.
+        input_dir: Directory containing the input video files.
+        output_dir: Directory to save the output video files.
+        n_workers: Number of workers to use for processing the video files.
+        confidence: Confidence threshold for the YOLO model.
+        device: Device to use for processing (e.g. 'cuda', 'cpu'). None
+            triggers auto-detection.
+        vehicle_classes: COCO class IDs to track. Defaults to car, motorcycle,
+            bus, truck. See Ultralytics docs for full class mapping.
+    """
+
     model_name: str = Field(
         ...,
         description="Name of the YOLO model to use for vehicle tracking.",
