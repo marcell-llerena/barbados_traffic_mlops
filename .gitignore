@@ -1,0 +1,27 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Virtual environments
+.env
+.venv
+
+# SQLite database
+*.db
+*.db-journal
+
+# MacOS generated files
+.DS_Store
+
+# Project-specific files
+data/
+
+# Ruff
+.ruff_cache/
