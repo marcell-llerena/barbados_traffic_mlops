@@ -5,7 +5,7 @@ build-backend = "hatchling.build"
 [project]
 name = "barbados-traffic-mlops"
 version = "0.1.0"
-description = "Add your description here"
+description = "MLOps project for traffic video analytics: YOLO-based detections, feature engineering, training, and production pipelines"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
