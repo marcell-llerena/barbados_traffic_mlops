@@ -18,13 +18,13 @@ _MODEL: YOLO | None = None
 def _init_worker(model_name: str, device: str | None = None) -> None:
     """Initialize the YOLO model in a worker process.
 
-    Loads the model into worker-local state for use by _track_one_video.
+    Loads the model into worker-local global state for use by _track_one_video.
     Auto-selects CUDA if available when device is None.
 
     Args:
         model_name: Name of the YOLO model to load.
-        device: Device to run inference on (e.g. 'cuda', 'cpu'). Defaults to
-            None (auto-detect).
+        device: Device to run inference on (e.g. 'cuda', 'cpu'). None
+            triggers auto-detection.
     """
     global _MODEL
     if device is None:
@@ -39,6 +39,7 @@ def _track_one_video(video_path: Path, config: YoloVehicleTrackerConfig) -> None
 
     Uses the worker-initialized YOLO model to track vehicles frame-by-frame,
     then writes bounding boxes and metadata to output_dir/{video_id}.csv.
+    Side effect: creates or overwrites a CSV file in config.output_dir.
 
     Args:
         video_path: Path to the input video file.
@@ -120,14 +121,19 @@ def _track_one_video(video_path: Path, config: YoloVehicleTrackerConfig) -> None
 
 
 class YoloVehicleTracker:
-    """Process videos in parallel to extract vehicle tracks via YOLO."""
+    """Process videos in parallel to extract vehicle tracks via YOLO.
+
+    Uses a process pool with one YOLO model per worker. Each worker processes
+    MP4 files from input_dir and writes CSV detections to output_dir.
+    """
 
     @staticmethod
     def track(config: YoloVehicleTrackerConfig) -> None:
         """Run vehicle tracking on all MP4 videos in the input directory.
 
         Spawns a process pool, tracks vehicles in each video, and writes
-        per-video CSV files to the configured output directory.
+        per-video CSV files to the configured output directory. Side effect:
+        creates CSV files in config.output_dir.
 
         Args:
             config: Tracker configuration (paths, model, workers, etc.).
